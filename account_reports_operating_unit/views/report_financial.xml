@@ -1,0 +1,9 @@
+<odoo>
+	<data>
+		<template id="search_template_comparison_ou" inherit_id="account_reports.search_template_comparison">
+			<xpath expr="//a[1]" position="attributes">
+				<attribute name="t-if">not options.get('operating_unit')</attribute>
+			</xpath>
+		</template>
+	</data>
+</odoo>

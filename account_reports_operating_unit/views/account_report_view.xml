@@ -1,0 +1,17 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_financial_report_form_opunit_inherit">
+			<field name="name">A</field>
+			<field name="model">account.financial.html.report</field>
+			<field name="inherit_id" ref="account_reports.view_account_financial_report_form" />
+			<field name="arch" type="xml">
+				<field name="debit_credit" position="after">
+					<field name="operating_unit" attrs="{'invisible': [('debit_credit', '=', True)]}" />
+				</field>
+				<field name="debit_credit" position="attributes">
+					<attribute name="attrs">{'invisible': [('operating_unit', '=', True)]}</attribute>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

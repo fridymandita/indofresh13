@@ -1,0 +1,48 @@
+<odoo>
+	<record model="ir.ui.view" id="product_template_form_inherit">
+		<field name="name">product.template.form.inherit</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view" />
+		<field name="arch" type="xml">
+			<xpath expr="//page[@name='variants']" position="after">
+				<page string="Variant Uom">
+					<field name="uom_ids" widget="one2many_list">
+						<tree string="Units of Measure" editable="bottom">
+							<field name="name" />
+							<field name="uom_type" />
+							<field name="factor_product" string="Ratio" digits="[42,5]"
+								attrs="{'readonly':[('uom_type','=','reference')],
+										'required':[('uom_type','!=','reference')]}" />
+							<field name="rounding" />
+						</tree>
+						<form string="Units of Measure">
+							<group>
+								<group>
+									<field name="name" />
+									<field name="uom_type" />
+									<field name="factor_product" digits="[42,5]" />
+									<p attrs="{'invisible':[('uom_type','!=','smaller')]}" class="oe_grey" colspan="2">
+										e.g: 1 *
+										(reference unit) = ratio * (this unit)
+									</p>
+									<p attrs="{'invisible':[('uom_type','!=','bigger')]}" class="oe_grey" colspan="2">
+										e.g: 1 *
+										(this unit) = ratio * (reference unit)
+									</p>
+								</group>
+								<group>
+									<field name="active" />
+									<field name="rounding" digits="[42, 5]" />
+								</group>
+							</group>
+						</form>
+					</field>
+				</page>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="uom.product_uom_form_action" model="ir.actions.act_window">
+		<field name="domain">[('product_tmpl_id','=',False)]</field>
+	</record>
+</odoo>
