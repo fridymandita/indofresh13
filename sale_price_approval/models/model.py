@@ -22,7 +22,7 @@ class SaleOrder(models.Model):
             order.message_subscribe([order.partner_id.id])
         self.write({
             'state': 'sale',
-            'confirmation_date': fields.Datetime.now()
+            # 'confirmation_date': fields.Datetime.now()
         })
         self._action_confirm()
         if self.env['ir.config_parameter'].sudo().get_param('sale.auto_done_setting'):
