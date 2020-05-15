@@ -17,7 +17,7 @@ class SaleOrder(models.Model):
         if self.partner_id.credit_limit > 0 and total_credit > self.partner_id.credit_limit:
             raise UserError(_('This customer has excess it credit limit!'))
         for inv in invs:
-            if inv.invoice_date_due < fields.Date.today():
+            if inv.state == 'posted' and inv.invoice_date_due < fields.Date.today():
                 raise UserError(
                     _('This customer has overdue invoice! (%s)' % inv.name))
         return super(SaleOrder, self).action_confirm()
