@@ -10,7 +10,7 @@ class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
     operating_unit_id = fields.Many2one(
-        comodel_name="operating.unit", required=True, domain="[('user_ids', '=', uid)]"
+        comodel_name="operating.unit", domain="[('user_ids', '=', uid)]"
     )
 
     @api.model_create_multi
