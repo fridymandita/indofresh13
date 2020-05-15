@@ -9,7 +9,6 @@ class SaleOrder(models.Model):
         invs = self.env['account.move'].search([
             ('partner_id', '=', self.partner_id.id),
             ('type', '=', 'out_invoice'),
-            ('state', '=', 'posted')
         ])
         if not invs:
             return super(SaleOrder, self).action_confirm()
