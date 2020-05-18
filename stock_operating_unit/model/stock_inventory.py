@@ -11,8 +11,7 @@ class StockInventory(models.Model):
         states={'draft': [('readonly', False)]})
 
     def action_validate(self):
-        self = self.with_context({
-            'operating_unit': self.location_id.operating_unit_id.id
-        })
+        self = self.with_context(
+            operating_unit=self.location_id.operating_unit_id.id)
         stock = super(StockInventory, self).action_validate()
         return stock

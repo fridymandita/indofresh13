@@ -1,6 +1,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
+
 class StockScrap(models.Model):
     _inherit = 'stock.scrap'
 
@@ -8,17 +9,15 @@ class StockScrap(models.Model):
         'operating.unit', 'Operating Unit',
         required=True, readonly=True,
         states={'draft': [('readonly', False)]})
-    
+
     @api.onchange('location_id')
     def _onchange_location_id(self):
         if self.location_id:
             unit = self.location_id.operating_unit_id
             self.operating_unit_id = unit
 
-    
     def action_validate(self):
-        self = self.with_context({
-            'operating_unit' : self.location_id.operating_unit_id.id
-        })
+        self = self.with_context(
+            operating_unit=self.location_id.operating_unit_id.id)
         stock = super(StockScrap, self).action_validate()
         return stock

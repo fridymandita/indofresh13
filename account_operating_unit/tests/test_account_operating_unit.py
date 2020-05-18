@@ -41,7 +41,7 @@ class TestAccountOperatingUnit(AccountingTestCase):
 
         # Create user1
         self.user_id =\
-            self.res_users_model.with_context({'no_reset_password': True}).\
+            self.res_users_model.with_context(no_reset_password=True).\
             create({
                 'name': 'Test Account User',
                 'login': 'user_1',
@@ -74,7 +74,7 @@ class TestAccountOperatingUnit(AccountingTestCase):
 
         # Create user2
         self.user2_id =\
-            self.res_users_model.with_context({'no_reset_password': True}).\
+            self.res_users_model.with_context(no_reset_password=True).\
             create({
                 'name': 'Test Account User',
                 'login': 'user_2',

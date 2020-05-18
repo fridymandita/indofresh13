@@ -55,7 +55,7 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
         """ Create a user."""
         group_ids = [group.id for group in groups]
         user =\
-            self.ResUsers.with_context({'no_reset_password': True}).\
+            self.ResUsers.with_context(no_reset_password=True).\
             create({
                 'name': 'Chicago Purchase User',
                 'login': login,
