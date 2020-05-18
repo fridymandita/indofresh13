@@ -75,10 +75,12 @@ class CleanData(models.TransientModel):
         sml = "stock_move_line"
         sm = "stock_move"
         sq = "stock_quant"
+        svl = "stock_valuation_layer"
         self.check_and_delete(sq)
         self.check_and_delete(sml)
         self.check_and_delete(sm)
         self.check_and_delete(sp)
+        self.check_and_delete(svl)
 
     def _clear_inv_pymt(self):
         apr = "account_partial_reconcile"
