@@ -53,7 +53,7 @@ class TestOperatingUnit(common.TransactionCase):
 
     def _create_operating_unit(self, uid, name, code):
         """ Create Operating Unit"""
-        ou = self.env['operating.unit'].sudo(uid).create({
+        ou = self.env['operating.unit'].with_user(uid).create({
             'name': name,
             'code': code,
             'partner_id': self.company.id,
@@ -68,7 +68,7 @@ class TestOperatingUnit(common.TransactionCase):
         self.b2b.sudo(self.user1.id).write({'code': 'B2B_changed'})
         # Read list of OU available by User 1
         operating_unit_list_1 = self.env[
-            'operating.unit'].sudo(self.user1.id).\
+            'operating.unit'].with_user(self.user1.id).\
             search([]).mapped('code')
         nou = self.env['operating.unit'].search([])
         self.assertEqual(len(operating_unit_list_1), len(nou),
@@ -80,11 +80,11 @@ class TestOperatingUnit(common.TransactionCase):
             self._create_operating_unit(self.user2.id, "Test", "TEST")
         with self.assertRaises(AccessError):
             # Write
-            self.b2b.sudo(self.user2.id).write({'code': 'B2B_changed'})
+            self.b2b.with_user(self.user2.id).write({'code': 'B2B_changed'})
 
         # Read list of OU available by User 2
         operating_unit_list_2 = self.env[
-            'operating.unit'].sudo(self.user2.id).\
+            'operating.unit'].with_user(self.user2.id).\
             search([]).mapped('code')
         self.assertEqual(len(operating_unit_list_2), 1,
                          'User 2 should have access to one OU')
