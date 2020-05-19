@@ -11,7 +11,6 @@ from . import exceptions
 _logger = logging.getLogger(__name__)
 
 
-
 class ApiRequest(JsonRequest, WebRequest):
     """ Handler for the ``http`` request type.
 
@@ -65,11 +64,12 @@ class ApiRequest(JsonRequest, WebRequest):
             return o.__str__()
 
     def _json_response(self, result=None, error=None):
-        #Harus ditambahkan, karena secara default Odoo tidak memiliki error parameter pada JSON Endpoint
-        #---------------------Begin of New Part----------------------------#
-        status=200
+        # Harus ditambahkan, karena secara default baik Odoo 8 dan Odoo 10, tidak memiliki error parameter pada JSON Endpoint
+        # ---------------------Begin of New Part---------------------------- #
+        status = 200
+
         def process_result(result):
-            status=200
+            status = 200
             new_error = result.get('error')
             if new_error:
                 error_code = new_error.get('code')
@@ -80,33 +80,33 @@ class ApiRequest(JsonRequest, WebRequest):
             new_status = result.get('code', status)
             return new_result, new_count, new_error, new_status
 
-        #---------------------End of New Part----------------------------#
+        # ---------------------End of New Part---------------------------- #
         response = {
             'version': '1.0',
-            }
+        }
         if error is not None:
             response['error'] = error
             status = error.get('code')
         if result is not None:
             result, count, error, status = process_result(result)
-            if not result is None:
+            if result is not None:
                 response['result'] = result
-            if not count is None:
+            if count is not None:
                 response['count'] = count
-            if error :
+            if error:
                 response['error'] = error
 
         mime = 'application/json'
-        body = json.dumps(response, default = self._date_converter)
+        body = json.dumps(response, default=self._date_converter)
 
-        #Harus ditambahkan, karena secara default odoo tidak memiliki STATUS CODE pada JSON Endpoint
-        #---------------------Begin of New Part----------------------------#
+        # Harus ditambahkan, karena secara default baik Odoo 8 dan Odoo 10, tidak memiliki STATUS CODE pada JSON Endpoint
+        # ---------------------Begin of New Part---------------------------- #
         return Response(
-                    response=body,
-                    status=status,
-                    headers=[('Content-Type', mime),
-                                   ('Content-Length', len(body))])
-        #---------------------End of New Part----------------------------#
+            response=body,
+            status=status,
+            headers=[('Content-Type', mime),
+                     ('Content-Length', len(body))])
+        # ---------------------End of New Part---------------------------- #
 
     def _handle_exception(self, exception):
         """Called within an except block to allow converting exceptions
@@ -118,9 +118,9 @@ class ApiRequest(JsonRequest, WebRequest):
             if not isinstance(exception, (odoo.exceptions.Warning, SessionExpiredException)):
                 _logger.exception("Exception during JSON request handling.")
             error = {
-                    'code': 500,
-                    'message': "Odoo Server Error",
-                    #'data': serialize_exception(exception)
+                'code': 500,
+                'message': "Odoo Server Error",
+                'data': serialize_exception(exception)
             }
             if isinstance(exception, AuthenticationError):
                 error['code'] = 100
@@ -152,9 +152,9 @@ class ApiRequest(JsonRequest, WebRequest):
             return self._json_response(error=error)
 
 
-def get_request(self, httprequest):
-    if ('/va/' in httprequest.path) and (httprequest.mimetype == "application/json"):
-        return ApiRequest(httprequest) 
+def get_request_new(self, httprequest):
+    if ('/api/v1/' in httprequest.path) and (httprequest.mimetype == "application/json"):
+        return ApiRequest(httprequest)
     if httprequest.args.get('jsonp'):
         return JsonRequest(httprequest)
     if httprequest.mimetype in ("application/json", "application/json-rpc"):
@@ -162,4 +162,5 @@ def get_request(self, httprequest):
     else:
         return HttpRequest(httprequest)
 
-Root.get_request = get_request
+
+Root.get_request = get_request_new

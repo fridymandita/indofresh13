@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="view_sale_order_form_inherit" model="ir.ui.view">
+		<field name="name">sale.order.form.inherit</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='order_line']/kanban//t[@t-esc='record.product_id.value']"
+				position="after">
+				<field name="grade" invisible="1" />
+				Grade:
+				<t t-esc="record.grade.value" />
+			</xpath>
+			<xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+				<field name="grade" required="1" />
+			</xpath>
+			<xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="after">
+				<field name="grade" required="1" />
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_product_template_form_inherit" model="ir.ui.view">
+		<field name="name">product.template.form.inherit</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_form_view" />
+		<field name="arch" type="xml">
+			<field name="type" position="after">
+				<field name="country_origin" />
+			</field>
+		</field>
+	</record>
+
+	<record id="view_stock_picking_form_inherit" model="ir.ui.view">
+		<field name="name">stock.picking.form.inherit</field>
+		<field name="model">stock.picking</field>
+		<field name="inherit_id" ref="stock.view_picking_form" />
+		<field name="arch" type="xml">
+			<page name="extra" position="inside">
+				<group string="WMS Information" readonly="1">
+					<group>
+						<field name="wms_transfer_date" />
+						<field name="wms_operator" />
+					</group>
+					<group>
+						<field name="wms_reference" />
+						<field name="wms_vehicle" />
+					</group>
+				</group>
+			</page>
+		</field>
+	</record>
+
+	<record id="view_stock_production_lot_form_inherit" model="ir.ui.view">
+		<field name="name">stock.production.lot.inherit.form</field>
+		<field name="model">stock.production.lot</field>
+		<field name="inherit_id" ref="stock.view_production_lot_form" />
+		<field name="arch" type="xml">
+			<group name="main_group" position="inside">
+				<group>
+					<field name="grade" />
+				</group>
+			</group>
+		</field>
+	</record>
+
+</odoo>
