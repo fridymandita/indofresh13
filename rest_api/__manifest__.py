@@ -1,31 +1,22 @@
 {
-    'name': 'Odoo Rest API - Indofresh WMS Integration',
+    'name': 'Odoo Rest API',
     'version': '13.0.0',
-    'author': 'ARKANA SOLUSI DIGITAL',
+    'author': 'Arkana Solusi Digital',
     'category': 'Backend',
     'website': 'https://www.arkana.co.id/',
     'summary': 'Restful Api Service',
-    'description': '''
-API for integration with largo
-''',
+    'description': '''''',
     'external_dependencies': {
         'python': [
-            'pyjwt'
+            'pyjwt',
+            'simplejson',
+            'basicauth',
         ],
     },
-    'depends': [
-        'base',
-        'product',
-        'stock',
-        'sale',
-        'purchase',
-        'stock_uom_byproduct'
-    ],
+    'depends': ['base','product'],
     'data': [
-        'security/ir.model.access.csv',
-
-        'views/refresh_token.xml',
-        'views/view_stock.xml',
+            'security/ir.model.access.csv',
+            'views/refresh_token.xml',
     ],
     'auto_install': False,
     'installable': True,

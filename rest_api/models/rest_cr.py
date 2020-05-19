@@ -6,7 +6,7 @@ class RestCr(models.Model):
     _name = 'rest.cr'
     _description = 'rest handler'
 
-    def login(self, uid):
+    def login(self, uid, store_id=False):
         result = {}
         res_user_doc = self.env['res.users'].browse(uid)
         # Supaya returnya hanya satu User
@@ -34,13 +34,3 @@ class RestCr(models.Model):
         if not refresh_token_doc.exists():
             return False
         return (refresh_token_doc.user_id.id, refresh_token_doc.user_id.name)
-
-    def api_get_model(self, model_name, field_list, model_id=False, limit=False, offset=False):
-        if model_id:
-            model_ids = self.env[model_name].sudo().browse(model_id)
-        else:
-            model_ids = self.env[model_name].sudo().search(
-                [], limit=limit, offset=offset)
-        result = model_ids.read(field_list, load=False)
-        count_result = len(result)
-        return result, count_result

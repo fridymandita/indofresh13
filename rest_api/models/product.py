@@ -1,43 +1,63 @@
-from odoo import models, fields
+from odoo import models
+from ..exceptions import RestException
 
 
-class ProductTemplate(models.Model):
-    _inherit = 'product.template'
-
-    country_origin = fields.Char('Country Origin')
-
-
-class ProductProduct(models.Model):
+class Product(models.Model):
     _inherit = 'product.product'
 
-    def api_get_product(self, product_id=False, limit=False, offset=False, order=None):
-        field_list = [
+    def api_get_product(self, product_id=False):
+        read_list = [
+            'write_date',
             'name',
-            'default_code',
-            'categ_id',
-            'uom_ids',
-            'uom_id',
-            'weight',
-            'volume',
-            'country_origin'
+            'type',
+            'default_code'
         ]
         if product_id:
-            result = self.browse(product_id).read(field_list)
-            result[0]['uom_ids'] = self.env['uom.uom'].browse(result[0]['uom_ids']).read([
-                'name', 'factor_product'])
-            count = 1
-        else:
-            search_list = [['sale_ok', '=', True]]
-            product_ids = self.search(
-                search_list, limit=limit, offset=offset, order=order)
-            result = product_ids.read(field_list)
-            uoms = self.env['uom.uom'].browse(
-                list(set(y for x in result for y in x['uom_ids']))).read([
-                    'name', 'factor_product'])
-            for r in result:
-                if r['uom_ids']:
-                    x = list(filter(
-                        lambda x: x['id'] in r['uom_ids'], uoms))
-                    r['uom_ids'] = x
-            count = len(result)
-        return result, count
+            product_ids = self.browse(product_id)
+            result = product_ids.read(read_list, load=False)
+            return result, len(product_ids.exists())
+        search_list = [
+            ('active', '=', True)]
+        product_ids = self.search(search_list)
+        result = product_ids.read(read_list, load=False)
+        return result
+
+class ProductCategory(models.Model):
+    _inherit = 'product.category'
+
+    def api_get_category(self, category_id=False):
+        read_list = [
+            'write_date',
+            'id',
+            'name',
+            'parent_id'
+        ]
+        if category_id:
+            category_ids = self.browse(category_id)
+            result = category_ids.read(read_list, load=False)
+            return result, len(category_ids.exists())
+        search_list = []
+        category_ids = self.search(search_list)
+        result = category_ids.read(read_list, load=False)
+        return result
+
+    def api_post_category(self, body, **kwargs):
+        new_category = body.get('data', False)
+        uid = kwargs.get('uid',1)
+        if new_category:
+            try:
+                category_id = self.with_user(uid).create(new_category)
+            except Exception:
+                return {"error":{"code": 400,"message":"gagal membuat kategori"}}
+        return {"category_id":category_id.id}
+
+    def api_edit_category(self, category_id, body, **kwargs):
+        vals = body.get('data', False)
+        uid = kwargs.get('uid',1)
+        if vals:
+            try:
+                category_id = self.with_user(uid).browse(category_id)
+                category_id.with_user(uid).write(vals[0])
+            except Exception:
+                return {"error":{"code": 400,"message":"gagal mengedit kategori"}}
+        return {"result": "sukses", "category_id": category_id.id}

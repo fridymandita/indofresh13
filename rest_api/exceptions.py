@@ -1,6 +1,3 @@
-import logging
-
-
 from odoo import exceptions
 
 class RestException(Exception):
