@@ -24,7 +24,7 @@ class SaleOrder(models.Model):
         for inv in invs:
             if inv.invoice_date_due < fields.Date.today():
                 raise UserError(
-                    _('This customer has overdue invoice! (%s)' % inv.move_name))
+                    _('This customer has overdue invoice! (%s)' % inv.name))
         return super(SaleOrder, self).action_confirm()
 
     def action_credit_limit_approval(self):
