@@ -18,7 +18,7 @@ class AccountPayment(models.Model):
     operating_unit_id = fields.Many2one(
         'operating.unit', string='Operating Unit',
         domain="[('user_ids', '=', uid)]",
-        required=True,
+        readonly=True, required=False,
         compute='_compute_operating_unit_id', store=True)
 
     def _get_counterpart_move_line_vals(self, invoice=False):
