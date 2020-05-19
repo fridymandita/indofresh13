@@ -119,6 +119,7 @@ class StockPicking(models.Model):
                 'location_dest_id': picking.location_dest_id.id,
                 'lot_id': self.env['stock.production.lot'].create({
                     'product_id': line.get('product_id'),
+                    'company_id': purchase.company_id.id,
                     'name': line.get('pallet'),
                     'grade': line.get('grade'),
                     'use_date': line.get('date_expired')
