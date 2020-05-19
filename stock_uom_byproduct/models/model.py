@@ -108,8 +108,8 @@ class InheritProductProduct(models.Model):
         return super(InheritProductProduct, self).create(vals_list)
 
     def write(self, vals):
-        res = False
         to_write = self.env['product.product']
+        res = False
         if vals.get('uom_name_show'):
             for product in self:
                 if not product.uom_id.product_tmpl_id:
@@ -125,6 +125,8 @@ class InheritProductProduct(models.Model):
                     res = super(InheritProductProduct, self).write(vals)
                 else:
                     to_write |= product
+        else:
+            to_write |= self
         if to_write:
             return super(InheritProductProduct, to_write).write(vals)
         return res

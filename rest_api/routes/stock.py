@@ -57,7 +57,7 @@ class ApiPicking(http.Controller):
     @token_required()
     def receipt(self, debug=False, **kwargs):
         return {
-            'result': request.env['stock.picking'].sudo(kwargs.get('uid') or 1).api_post_receipt(
+            'result': request.env['stock.picking'].sudo().api_post_receipt(
                 request.jsonrequest)
         }
 
@@ -66,7 +66,7 @@ class ApiPicking(http.Controller):
     @token_required()
     def qc(self, debug=False, **kwargs):
         return {
-            'result': request.env['stock.picking'].sudo(kwargs.get('uid') or 1).api_post_qc(
+            'result': request.env['stock.picking'].sudo().api_post_qc(
                 request.jsonrequest)
         }
 
@@ -75,7 +75,7 @@ class ApiPicking(http.Controller):
     @token_required()
     def picking(self, debug=False, **kwargs):
         return {
-            'result': request.env['stock.picking'].sudo(kwargs.get('uid') or 1).api_post_picking(
+            'result': request.env['stock.picking'].sudo().api_post_picking(
                 request.jsonrequest)
         }
 
@@ -84,7 +84,7 @@ class ApiPicking(http.Controller):
     @token_required()
     def delivery(self, debug=False, **kwargs):
         return {
-            'result': request.env['stock.picking'].sudo(kwargs.get('uid') or 1).api_post_delivery(
+            'result': request.env['stock.picking'].sudo().api_post_delivery(
                 request.jsonrequest)
         }
 
@@ -93,7 +93,7 @@ class ApiPicking(http.Controller):
     @token_required()
     def bintransfer(self, debug=False, **kwargs):
         return {
-            'result': request.env['stock.picking'].sudo(kwargs.get('uid') or 1).api_post_bintransfer(
+            'result': request.env['stock.picking'].sudo().api_post_bintransfer(
                 request.jsonrequest)
         }
 
@@ -102,7 +102,7 @@ class ApiPicking(http.Controller):
     @token_required()
     def opname(self, debug=False, **kwargs):
         return {
-            'result': request.env['stock.picking'].sudo(kwargs.get('uid') or 1).api_post_opname(
+            'result': request.env['stock.picking'].sudo().api_post_opname(
                 request.jsonrequest)
         }
 
@@ -111,7 +111,7 @@ class ApiPicking(http.Controller):
     @token_required()
     def return_checking(self, debug=False, **kwargs):
         return {
-            'result': request.env['stock.picking'].sudo(kwargs.get('uid') or 1).api_post_return_checking(
+            'result': request.env['stock.picking'].sudo().api_post_return_checking(
                 request.jsonrequest)
         }
 
@@ -120,7 +120,7 @@ class ApiPicking(http.Controller):
     @token_required()
     def return_loading(self, debug=False, **kwargs):
         return {
-            'result': request.env['stock.picking'].sudo(kwargs.get('uid') or 1).api_post_return_loading(
+            'result': request.env['stock.picking'].sudo().api_post_return_loading(
                 request.jsonrequest)
         }
 
@@ -129,6 +129,6 @@ class ApiPicking(http.Controller):
     @token_required()
     def return_receipt(self, debug=False, **kwargs):
         return {
-            'result': request.env['stock.picking'].sudo(kwargs.get('uid') or 1).api_post_return_receipt(
+            'result': request.env['stock.picking'].sudo().api_post_return_receipt(
                 request.jsonrequest)
         }
