@@ -170,6 +170,7 @@ class InheritProductTemplate(models.Model):
 
     def write(self, vals):
         to_write = self.env['product.template']
+        res = False
         if vals.get('uom_name_show'):
             for product in self:
                 if not product.uom_id.product_tmpl_id:
