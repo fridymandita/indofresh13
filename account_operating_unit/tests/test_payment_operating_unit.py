@@ -12,10 +12,10 @@ class TestInvoiceOperatingUnit(test_ou.TestAccountOperatingUnit):
         """Create and invoice and a subsquent payment, in another OU"""
 
         # Create invoice for B2B operating unit
-        self.invoice = self.invoice_model.sudo(self.user_id.id).create(
+        self.invoice = self.invoice_model.with_user(self.user_id.id).create(
             self._prepare_invoice(self.b2b.id))
         # Validate the invoice
-        self.invoice.sudo(self.user_id.id).action_invoice_open()
+        self.invoice.with_user(self.user_id.id).action_invoice_open()
 
         # Pay the invoice using a cash journal associated to the main company
         ctx = {'active_model': 'account.invoice', 'active_ids': [
