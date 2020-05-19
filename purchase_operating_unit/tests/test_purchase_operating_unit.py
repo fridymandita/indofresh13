@@ -48,7 +48,7 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
             self.user1_id, [(self.product1, 1000),
                             (self.product2, 500),
                             (self.product3, 800)])
-        self.purchase1.sudo(self.user1_id).button_confirm()
+        self.purchase1.with_user(self.user1_id).button_confirm()
         self._create_invoice(self.purchase1, self.partner1, self.account)
 
     def _create_user(self, login, groups, company, operating_units):
@@ -83,7 +83,7 @@ class TestPurchaseOperatingUnit(common.TransactionCase):
                 'date_planned': time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
             }
             lines.append((0, 0, line_values))
-        purchase = self.PurchaseOrder.sudo(user_id).create({
+        purchase = self.PurchaseOrder.with_user(user_id).create({
             'operating_unit_id': self.ou1.id,
             'requesting_operating_unit_id': self.ou1.id,
             'partner_id': self.partner1.id,

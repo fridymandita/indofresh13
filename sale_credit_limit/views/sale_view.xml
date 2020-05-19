@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_sale_order_form_inherit">
+			<field name="name">sale.order.form.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<button name="action_confirm" attrs="{'invisible': [('state', 'not in', ['sent'])]}"
+					position="attributes">
+					<attribute name="attrs">{'invisible': ['|', ('credit_limit_approval','=',True), ('state',
+						'not in', ['sent'])]}
+					</attribute>
+				</button>
+				<button name="action_confirm" attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+					position="attributes">
+					<attribute name="attrs">{'invisible': ['|', ('credit_limit_approval','=',True), ('state',
+						'not in', ['draft'])]}
+					</attribute>
+				</button>
+				<button name="action_confirm" position="after">
+					<button name="action_credit_limit_approval" string="Request Approval Credit Limit"
+						type="object"
+						attrs="{'invisible': ['|', ('credit_limit_approval','=',True), ('state', 'not in', ['draft','sent'])]}" />
+					<button name="action_credit_limit_approve" string="Approve Credit Limit" type="object"
+						class="btn-primary" groups="sale_credit_limit.group_sale_creditlimitapproval"
+						attrs="{'invisible': ['|', ('credit_limit_approval','=',False), ('state', 'not in', ['draft','sent'])]}" />
+					<field name="credit_limit_approval" invisible="1" />
+				</button>
+			</field>
+		</record>
+	</data>
+</odoo>

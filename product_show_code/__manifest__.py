@@ -20,7 +20,7 @@
     # any module necessary for this one to work correctly
     'depends': [
         'purchase',
-        'sale',
+        'sale'
     ],
 
     # always loaded

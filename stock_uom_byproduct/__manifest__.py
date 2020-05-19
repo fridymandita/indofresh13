@@ -8,7 +8,7 @@
     'description': """
 UOM Product
 ====================
-Tiap Product Beda Uom
+Setiap Product Beda Uom
 
 """,
     'depends': [

@@ -54,7 +54,7 @@ class TestSaleTeamOperatingUnit(common.TransactionCase):
 
     def _create_crm_team(self, uid, operating_unit):
         """Create a Sales Team."""
-        crm = self.crm_team_model.sudo(uid).create(
+        crm = self.crm_team_model.with_user(uid).create(
             {'name': 'CRM team',
              'operating_unit_id': operating_unit.id,
              'company_id': self.company.id})
@@ -63,7 +63,7 @@ class TestSaleTeamOperatingUnit(common.TransactionCase):
     def test_crm_team(self):
         # User 2 is only assigned to B2C Operating Unit, and cannot
         # access CRM teams for Main Operating Unit.
-        team = self.crm_team_model.sudo(self.user2.id).\
+        team = self.crm_team_model.with_user(self.user2.id).\
             search([('id', '=', self.team1.id),
                     ('operating_unit_id', '=', self.ou1.id)])
         self.assertEqual(team.ids, [], 'User 2 should not have access to '

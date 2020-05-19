@@ -20,11 +20,17 @@
     'version': '13.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['sale'],
+    'depends': [
+        'sale',
+        'sale_management'
+    ],
 
     # always loaded
     'data': [
+        'security/res_groups.xml',
+
         'views/partner_view.xml',
+        'views/sale_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
