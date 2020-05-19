@@ -19,8 +19,8 @@
 
     # any module necessary for this one to work correctly
     'depends': [
+        'purchase',
         'sale',
-        'purchase'
     ],
 
     # always loaded
