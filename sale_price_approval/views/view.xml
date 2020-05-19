@@ -7,7 +7,7 @@
 			<field name="arch" type="xml">
 				<xpath expr="//button[@name='action_confirm']" position="before">
 					<button name="action_managemen" states="managemen" type="object" string="Confrim"
-						groups="sale_price_approval.group_managemen" />
+						groups="sale_price_approval.group_management" />
 				</xpath>
 				<xpath expr="//button[@name='action_cancel']" position="replace">
 					<button name="action_cancel" states="draft,sent,sale,managemen" type="object"
