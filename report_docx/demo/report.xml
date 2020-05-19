@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<report id="partner_docx" model="res.partner" string="Print to DOCX" report_type="docx"
+		name="report_docx.partner_docx" file="res_partner" attachment_use="False" />
+</odoo>
