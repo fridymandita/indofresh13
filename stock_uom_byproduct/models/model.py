@@ -85,7 +85,7 @@ class InheritProductProduct(models.Model):
         'uom.uom', compute='_uom_ids', string='Unit of Measures')
 
     uom_name_show = fields.Char(
-        'Unit of Measure Name', related='uom_id.name', readonly=False)
+        'Main Unit of Measure', related='uom_id.name', readonly=False)
     uom_rounding = fields.Float(
         'UoM Rounding', default=0.01, digits=0, related='uom_id.rounding', readonly=False)
     uom_category_id = fields.Many2one(
@@ -136,7 +136,7 @@ class InheritProductTemplate(models.Model):
     _inherit = 'product.template'
 
     uom_name_show = fields.Char(
-        'Unit of Measure Name', related='uom_id.name', readonly=False)
+        'Main Unit of Measure', related='uom_id.name', readonly=False)
     uom_rounding = fields.Float(
         'UoM Rounding', default=0.01, digits=0, related='uom_id.rounding', readonly=False)
     uom_category_id = fields.Many2one(
@@ -162,13 +162,12 @@ class InheritProductTemplate(models.Model):
                     'is_product_main_uom': True
                 })]
         res = super(InheritProductTemplate, self).create(vals_list)
-        for product in res:
-            if product.uom_main_ids:
-                uom_id = product.uom_main_ids.ids[0]
-                product.write({
-                    'uom_id': uom_id,
-                    'uom_po_id': uom_id,
-                })
+        for product in res.filtered(lambda p: p.uom_main_ids):
+            uom_id = product.uom_main_ids.ids[0]
+            product.write({
+                'uom_id': uom_id,
+                'uom_po_id': uom_id,
+            })
         return res
 
     def write(self, vals):

@@ -24,7 +24,10 @@
 
     # always loaded
     'data': [
+        'security/res_groups.xml',
+
         'views/partner_view.xml',
+        'views/sale_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
