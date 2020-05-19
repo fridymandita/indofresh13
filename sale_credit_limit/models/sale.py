@@ -12,9 +12,10 @@ class SaleOrder(models.Model):
         if self._context.get('approve_credit_limit'):
             return super(SaleOrder, self).action_confirm()
         invs = self.env['account.move'].search([
-            ('partner_id', '=', self.partner_id.id),
+            ('commercial_partner_id', '=', self.partner_id.id),
             ('type', '=', 'out_invoice'),
-            ('state', '=', 'posted')
+            ('state', '=', 'posted'),
+            ('invoice_payment_state', '=', 'not_paid')
         ])
         total_credit = sum(inv.amount_total for inv in invs) + \
             self.amount_total
