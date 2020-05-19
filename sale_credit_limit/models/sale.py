@@ -16,8 +16,6 @@ class SaleOrder(models.Model):
             ('type', '=', 'out_invoice'),
             ('state', '=', 'posted')
         ])
-        if not invs:
-            return super(SaleOrder, self).action_confirm()
         total_credit = sum(inv.amount_total for inv in invs) + \
             self.amount_total
         if self.partner_id.credit_limit > 0 and total_credit > self.partner_id.credit_limit:

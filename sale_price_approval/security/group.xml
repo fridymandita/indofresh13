@@ -2,8 +2,8 @@
 	<data>
 		<record id="group_management" model="res.groups">
 			<field name="name">Button Sale Order Managemen</field>
-            <field name="users" eval="[(4, ref('base.user_root'))]"/>
-			<!-- <field name="category_id" ref="module_category_project"/> -->
+			<field name="users" eval="[(4, ref('base.user_root'))]" />
+			<field name="category_id" ref="base.module_category_sales" />
 		</record>
 	</data>
 </odoo>
