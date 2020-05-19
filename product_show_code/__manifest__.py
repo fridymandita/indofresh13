@@ -18,7 +18,10 @@
     'version': '13.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['purchase'],
+    'depends': [
+        'purchase',
+        'sale'
+    ],
 
     # always loaded
     'data': [
