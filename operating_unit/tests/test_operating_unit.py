@@ -65,7 +65,7 @@ class TestOperatingUnit(common.TransactionCase):
         # Create
         self._create_operating_unit(self.user1.id, "Test", "TEST")
         # Write
-        self.b2b.sudo(self.user1.id).write({'code': 'B2B_changed'})
+        self.b2b.with_user(self.user1.id).write({'code': 'B2B_changed'})
         # Read list of OU available by User 1
         operating_unit_list_1 = self.env[
             'operating.unit'].with_user(self.user1.id).\
